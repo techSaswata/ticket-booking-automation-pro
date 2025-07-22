@@ -1,0 +1,414 @@
+<Window x:Class="TrainBookingAutomation.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="🚄 TrainBooking Pro - Advanced Automation | by techSas❤️" 
+        Height="900" Width="1400"
+        Background="#0F0F23"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <Storyboard x:Key="SearchAnimation">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5"/>
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,20,0,0" To="0,0,0,0" Duration="0:0:0.3"/>
+        </Storyboard>
+        
+        <Style x:Key="GlowCard" TargetType="materialDesign:Card">
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#FF6B35" BlurRadius="15" ShadowDepth="0" Opacity="0.3"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <!-- Background with gradient -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#0F0F23" Offset="0"/>
+                <GradientStop Color="#1E1E2E" Offset="0.5"/>
+                <GradientStop Color="#2A2A3E" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <!-- Custom Title Bar -->
+        <Grid Height="40" VerticalAlignment="Top" Background="#2A2A3E" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="15,0">
+                <materialDesign:PackIcon Kind="Train" Foreground="#FF6B35" Width="20" Height="20"/>
+                <TextBlock Text="TrainBooking Pro - Advanced Automation" Foreground="White" FontWeight="Bold" Margin="10,0"/>
+                <TextBlock Text="by techSas❤️" Foreground="#FF6B35" FontWeight="Bold" FontSize="12" Margin="10,0" VerticalAlignment="Center"/>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Style="{StaticResource MaterialDesignIconButton}" Click="MinimizeWindow" Width="40" Height="40">
+                    <materialDesign:PackIcon Kind="WindowMinimize" Foreground="White"/>
+                </Button>
+                <Button Style="{StaticResource MaterialDesignIconButton}" Click="MaximizeWindow" Width="40" Height="40">
+                    <materialDesign:PackIcon Kind="WindowMaximize" Foreground="White"/>
+                </Button>
+                <Button Style="{StaticResource MaterialDesignIconButton}" Click="CloseWindow" Width="40" Height="40">
+                    <materialDesign:PackIcon Kind="Close" Foreground="#FF6B6B"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <!-- Main Content -->
+        <Grid Margin="0,40,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header Section -->
+            <Grid Grid.Row="0" Margin="20">
+                <materialDesign:Card Style="{StaticResource GlowCard}" Padding="30" Background="#1E1E2E">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Search Panel -->
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="🚄 Smart Train Booking" FontSize="28" FontWeight="Bold" Foreground="#FF6B35" Margin="0,0,0,20"/>
+                            
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- From Station -->
+                                <ComboBox x:Name="FromStationCombo" Grid.Column="0" Margin="0,0,10,10"
+                                         materialDesign:HintAssist.Hint="From Station"
+                                         Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                         IsEditable="True" TextSearch.TextPath="StationName"
+                                         Foreground="White" FontSize="14"/>
+
+                                <!-- To Station -->
+                                <ComboBox x:Name="ToStationCombo" Grid.Column="1" Margin="0,0,10,10"
+                                         materialDesign:HintAssist.Hint="To Station"
+                                         Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                         IsEditable="True" TextSearch.TextPath="StationName"
+                                         Foreground="White" FontSize="14"/>
+
+                                <!-- Travel Date -->
+                                <DatePicker x:Name="TravelDatePicker" Grid.Column="2" Margin="0,0,10,10"
+                                           materialDesign:HintAssist.Hint="Travel Date"
+                                           Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                           Foreground="White" FontSize="14"/>
+
+                                <!-- Search Button -->
+                                <Button x:Name="SearchButton" Grid.Column="3" Style="{StaticResource GlowButton}"
+                                       Click="SearchButton_Click" Padding="20,10" Margin="0,0,0,10">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Magnify" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                        <TextBlock Text="SEARCH" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </Button>
+
+                                <!-- Class Selection -->
+                                <ComboBox x:Name="ClassCombo" Grid.Row="1" Grid.Column="0" Margin="0,0,10,0"
+                                         materialDesign:HintAssist.Hint="Preferred Class"
+                                         Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                         Foreground="White" FontSize="14"/>
+
+                                <!-- Passengers -->
+                                <TextBox x:Name="PassengerCountText" Grid.Row="1" Grid.Column="1" Margin="0,0,10,0"
+                                        materialDesign:HintAssist.Hint="Passengers"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                        Foreground="White" FontSize="14" Text="1"/>
+
+                                <!-- Automation Toggle -->
+                                <ToggleButton x:Name="AutomationToggle" Grid.Row="1" Grid.Column="2" 
+                                             Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                             Margin="0,10,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Grid.Row="1" Grid.Column="2" Text="Auto Booking" Foreground="White" 
+                                          Margin="60,15,0,0" FontSize="12"/>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- Quick Stats -->
+                        <StackPanel Grid.Column="1" Margin="30,0,0,0">
+                            <TextBlock Text="🎯 Quick Stats" FontSize="18" FontWeight="Bold" Foreground="White" Margin="0,0,0,15"/>
+                            
+                            <materialDesign:Card Background="#2A2A3E" Margin="0,0,0,10" Padding="15">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <materialDesign:PackIcon Kind="CheckCircle" Foreground="#4CAF50" Width="20" Height="20"/>
+                                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                        <TextBlock x:Name="SuccessRateText" Text="95.2%" FontWeight="Bold" Foreground="White"/>
+                                        <TextBlock Text="Success Rate" FontSize="10" Foreground="#888"/>
+                                    </StackPanel>
+                                </Grid>
+                            </materialDesign:Card>
+
+                            <materialDesign:Card Background="#2A2A3E" Margin="0,0,0,10" Padding="15">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <materialDesign:PackIcon Kind="Flash" Foreground="#FF9800" Width="20" Height="20"/>
+                                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                        <TextBlock x:Name="AvgTimeText" Text="2.3s" FontWeight="Bold" Foreground="White"/>
+                                        <TextBlock Text="Avg Booking Time" FontSize="10" Foreground="#888"/>
+                                    </StackPanel>
+                                </Grid>
+                            </materialDesign:Card>
+
+                            <materialDesign:Card Background="#2A2A3E" Padding="15">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <materialDesign:PackIcon Kind="TrendingUp" Foreground="#2196F3" Width="20" Height="20"/>
+                                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                        <TextBlock x:Name="ActiveBookingsText" Text="12" FontWeight="Bold" Foreground="White"/>
+                                        <TextBlock Text="Active Automations" FontSize="10" Foreground="#888"/>
+                                    </StackPanel>
+                                </Grid>
+                            </materialDesign:Card>
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:Card>
+            </Grid>
+
+            <!-- Main Content Tabs -->
+            <TabControl Grid.Row="1" Style="{StaticResource MaterialDesignNavigationRailTabControl}" 
+                       Background="Transparent" Margin="20,10,20,20">
+                
+                <!-- Train Search Results -->
+                <TabItem Header="🔍 Search Results">
+                    <materialDesign:Card Margin="10" Padding="0" Background="#1E1E2E">
+                        <ScrollViewer x:Name="SearchResultsScroll" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl x:Name="TrainResultsList" Margin="20">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <materialDesign:Card Style="{StaticResource TrainCardStyle}" Margin="0,0,0,15" 
+                                                           MouseEnter="TrainCard_MouseEnter" Cursor="Hand">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Column="0">
+                                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                                        <TextBlock Text="{Binding TrainNumber}" FontWeight="Bold" FontSize="16" Foreground="#FF6B35"/>
+                                                        <TextBlock Text="{Binding TrainName}" FontWeight="Bold" FontSize="16" Margin="10,0,0,0" Foreground="White"/>
+                                                        <Border Background="#4CAF50" CornerRadius="8" Padding="5,2" Margin="10,0,0,0">
+                                                            <TextBlock Text="{Binding Type}" FontSize="10" Foreground="White"/>
+                                                        </Border>
+                                                    </StackPanel>
+                                                    
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        
+                                                        <StackPanel Grid.Column="0">
+                                                            <TextBlock Text="{Binding DepartureTime, StringFormat=HH:mm}" FontSize="20" FontWeight="Bold" Foreground="White"/>
+                                                            <TextBlock Text="{Binding Source}" FontSize="12" Foreground="#888"/>
+                                                        </StackPanel>
+                                                        
+                                                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                                                            <Line Stroke="#888" StrokeThickness="2" X1="0" Y1="10" X2="40" Y2="10"/>
+                                                            <materialDesign:PackIcon Kind="Train" Foreground="#FF6B35" Margin="5,0"/>
+                                                            <Line Stroke="#888" StrokeThickness="2" X1="0" Y1="10" X2="40" Y2="10"/>
+                                                        </StackPanel>
+                                                        
+                                                        <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                                            <TextBlock Text="{Binding ArrivalTime, StringFormat=HH:mm}" FontSize="20" FontWeight="Bold" Foreground="White"/>
+                                                            <TextBlock Text="{Binding Destination}" FontSize="12" Foreground="#888"/>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                    
+                                                    <TextBlock Text="{Binding Duration}" FontSize="12" Foreground="#888" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="1" Margin="20,0" VerticalAlignment="Center">
+                                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                                        <materialDesign:PackIcon Kind="Star" Foreground="#FFD700" Width="16" Height="16"/>
+                                                        <TextBlock Text="{Binding Rating}" FontWeight="Bold" Foreground="White" Margin="5,0"/>
+                                                    </StackPanel>
+                                                    <TextBlock Text="₹1,250" FontSize="18" FontWeight="Bold" Foreground="#4CAF50"/>
+                                                    <TextBlock Text="45 seats left" FontSize="10" Foreground="#888"/>
+                                                </StackPanel>
+
+                                                <Button Grid.Column="2" Style="{StaticResource GlowButton}" 
+                                                       Content="BOOK NOW" Padding="20,10" 
+                                                       Click="BookNowButton_Click"/>
+                                            </Grid>
+                                        </materialDesign:Card>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </materialDesign:Card>
+                </TabItem>
+
+                <!-- AI Recommendations -->
+                <TabItem Header="🤖 AI Assistant">
+                    <materialDesign:Card Margin="10" Padding="20" Background="#1E1E2E">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            
+                            <TextBlock Grid.Row="0" Text="🤖 AI-Powered Recommendations" FontSize="20" FontWeight="Bold" Foreground="#FF6B35" Margin="0,0,0,20"/>
+                            
+                            <ScrollViewer Grid.Row="1">
+                                <ItemsControl x:Name="RecommendationsList">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <materialDesign:Card Background="#2A2A3E" Margin="0,0,0,15" Padding="20">
+                                                <StackPanel>
+                                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                                        <materialDesign:PackIcon Kind="Lightbulb" Foreground="#FFD700" Width="20" Height="20"/>
+                                                        <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="16" Foreground="White" Margin="10,0"/>
+                                                        <Border Background="#2196F3" CornerRadius="10" Padding="8,3" Margin="10,0,0,0">
+                                                            <TextBlock Text="{Binding Confidence, StringFormat=P0}" FontSize="10" Foreground="White"/>
+                                                        </Border>
+                                                    </StackPanel>
+                                                    <TextBlock Text="{Binding Description}" FontSize="14" Foreground="#CCC" TextWrapping="Wrap"/>
+                                                </StackPanel>
+                                            </materialDesign:Card>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Grid>
+                    </materialDesign:Card>
+                </TabItem>
+
+                <!-- Booking History -->
+                <TabItem Header="📋 Booking History">
+                    <materialDesign:Card Margin="10" Padding="20" Background="#1E1E2E">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            
+                            <TextBlock Grid.Row="0" Text="📋 Booking History & Analytics" FontSize="20" FontWeight="Bold" Foreground="#FF6B35" Margin="0,0,0,20"/>
+                            
+                            <DataGrid x:Name="BookingHistoryGrid" Grid.Row="1" 
+                                     Style="{StaticResource MaterialDesignDataGrid}"
+                                     Background="Transparent" Foreground="White"
+                                     AutoGenerateColumns="False" CanUserAddRows="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="PNR" Binding="{Binding PNR}" Width="120"/>
+                                    <DataGridTextColumn Header="Train" Binding="{Binding SelectedTrain.TrainName}" Width="*"/>
+                                    <DataGridTextColumn Header="Route" Binding="{Binding Request.Source}" Width="150"/>
+                                    <DataGridTextColumn Header="Date" Binding="{Binding BookedAt, StringFormat=dd/MM/yyyy}" Width="100"/>
+                                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100"/>
+                                    <DataGridTextColumn Header="Amount" Binding="{Binding TotalAmount, StringFormat=₹{0:N0}}" Width="100"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </materialDesign:Card>
+                </TabItem>
+
+                <!-- Settings -->
+                <TabItem Header="⚙️ Settings">
+                    <materialDesign:Card Margin="10" Padding="20" Background="#1E1E2E">
+                        <ScrollViewer>
+                            <StackPanel>
+                                <TextBlock Text="⚙️ Automation Settings" FontSize="20" FontWeight="Bold" Foreground="#FF6B35" Margin="0,0,0,30"/>
+                                
+                                <!-- Automation Settings -->
+                                <Expander Header="🤖 Automation Preferences" Foreground="White" Margin="0,0,0,20">
+                                    <StackPanel Margin="20">
+                                        <CheckBox Content="Enable Auto-Booking" Foreground="White" Margin="0,0,0,10"/>
+                                        <CheckBox Content="Enable Price Tracking" Foreground="White" Margin="0,0,0,10"/>
+                                        <CheckBox Content="Enable Waitlist Monitoring" Foreground="White" Margin="0,0,0,10"/>
+                                        <CheckBox Content="Enable Smart Seat Selection" Foreground="White" Margin="0,0,0,10"/>
+                                        <CheckBox Content="Enable Multi-Train Booking" Foreground="White" Margin="0,0,0,10"/>
+                                    </StackPanel>
+                                </Expander>
+
+                                <!-- Notification Settings -->
+                                <Expander Header="🔔 Notification Preferences" Foreground="White" Margin="0,0,0,20">
+                                    <StackPanel Margin="20">
+                                        <CheckBox Content="Desktop Notifications" Foreground="White" Margin="0,0,0,10"/>
+                                        <CheckBox Content="Email Notifications" Foreground="White" Margin="0,0,0,10"/>
+                                        <CheckBox Content="SMS Notifications" Foreground="White" Margin="0,0,0,10"/>
+                                        <CheckBox Content="Price Drop Alerts" Foreground="White" Margin="0,0,0,10"/>
+                                    </StackPanel>
+                                </Expander>
+
+                                <!-- Advanced Settings -->
+                                <Expander Header="🔧 Advanced Settings" Foreground="White">
+                                    <StackPanel Margin="20">
+                                        <TextBox materialDesign:HintAssist.Hint="Max Retry Attempts" Margin="0,0,0,15" Text="5" Foreground="White"/>
+                                        <TextBox materialDesign:HintAssist.Hint="Retry Interval (seconds)" Margin="0,0,0,15" Text="30" Foreground="White"/>
+                                        <TextBox materialDesign:HintAssist.Hint="Booking Window (hours)" Margin="0,0,0,15" Text="2" Foreground="White"/>
+                                        <ComboBox materialDesign:HintAssist.Hint="Priority Level" Margin="0,0,0,15" Foreground="White">
+                                            <ComboBoxItem Content="Low"/>
+                                            <ComboBoxItem Content="Normal"/>
+                                            <ComboBoxItem Content="High"/>
+                                            <ComboBoxItem Content="Critical"/>
+                                        </ComboBox>
+                                    </StackPanel>
+                                </Expander>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </materialDesign:Card>
+                </TabItem>
+            </TabControl>
+        </Grid>
+
+        <!-- Status Bar -->
+        <Grid Height="30" VerticalAlignment="Bottom" Background="#2A2A3E">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="15,0">
+                <materialDesign:PackIcon Kind="Circle" Foreground="#4CAF50" Width="10" Height="10"/>
+                <TextBlock x:Name="StatusText" Text="Ready for booking automation" Foreground="White" FontSize="11" Margin="8,0"/>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="15,0">
+                <TextBlock Text="Last Update:" Foreground="#888" FontSize="10" Margin="0,0,5,0"/>
+                <TextBlock x:Name="LastUpdateText" Text="Just now" Foreground="White" FontSize="10"/>
+                <TextBlock Text="| Powered by techSas❤️" Foreground="#FF6B35" FontSize="10" Margin="10,0,0,0"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Loading Overlay -->
+        <Grid x:Name="LoadingOverlay" Background="#AA000000" Visibility="Collapsed">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                           Width="60" Height="60" IsIndeterminate="True" 
+                           Value="0" Foreground="#FF6B35"/>
+                <TextBlock Text="🚄 Searching trains..." FontSize="16" Foreground="White" 
+                          HorizontalAlignment="Center" Margin="0,20,0,0"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window> 
