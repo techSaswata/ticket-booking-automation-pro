@@ -82,7 +82,7 @@ TrainBookingAutomation/
 - **UI Library**: Material Design In XAML Toolkit 4.9.0
 - **Dependency Injection**: Microsoft.Extensions.DependencyInjection
 - **Data Visualization**: ScottPlot.WPF for analytics
-- **HTTP Client**: RestSharp for API integration
+- **HTTP Client**: RestSharp 112.1.0 (latest secure version)
 - **Logging**: Microsoft.Extensions.Logging
 
 ### **Architecture Patterns**

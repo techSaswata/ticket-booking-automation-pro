@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="🚄 TrainBooking Pro - Advanced Automation | by techSas♥" 
+        Title="🚄 TrainBooking Pro - Advanced Automation | by techSas" 
         Height="900" Width="1400"
         Background="#0F0F23"
         WindowStyle="None"
@@ -44,7 +44,7 @@
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="15,0">
                 <materialDesign:PackIcon Kind="Train" Foreground="#FF6B35" Width="20" Height="20"/>
                 <TextBlock Text="TrainBooking Pro - Advanced Automation" Foreground="White" FontWeight="Bold" Margin="10,0"/>
-                <TextBlock Text="by techSas♥" Foreground="#FF6B35" FontWeight="Bold" FontSize="12" Margin="10,0" VerticalAlignment="Center"/>
+                <TextBlock Text="by techSas" Foreground="#FF6B35" FontWeight="Bold" FontSize="12" Margin="10,0" VerticalAlignment="Center"/>
             </StackPanel>
             
             <StackPanel Grid.Column="1" Orientation="Horizontal">
@@ -396,7 +396,7 @@
             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="15,0">
                 <TextBlock Text="Last Update:" Foreground="#888" FontSize="10" Margin="0,0,5,0"/>
                 <TextBlock x:Name="LastUpdateText" Text="Just now" Foreground="White" FontSize="10"/>
-                <TextBlock Text="| Powered by techSas♥" Foreground="#FF6B35" FontSize="10" Margin="10,0,0,0"/>
+                <TextBlock Text="| Powered by techSas" Foreground="#FF6B35" FontSize="10" Margin="10,0,0,0"/>
             </StackPanel>
         </Grid>
 
