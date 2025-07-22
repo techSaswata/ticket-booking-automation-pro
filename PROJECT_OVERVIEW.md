@@ -81,7 +81,7 @@ TrainBookingAutomation/
 - **Framework**: .NET 8.0 WPF (Windows Presentation Foundation)
 - **UI Library**: Material Design In XAML Toolkit 4.9.0
 - **Dependency Injection**: Microsoft.Extensions.DependencyInjection
-- **Data Visualization**: LiveCharts.Wpf for analytics
+- **Data Visualization**: ScottPlot.WPF for analytics
 - **HTTP Client**: RestSharp for API integration
 - **Logging**: Microsoft.Extensions.Logging
 

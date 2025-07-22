@@ -40,7 +40,7 @@ A revolutionary desktop application for automated train booking with AI-powered 
 - **Framework**: .NET 8.0 WPF (Windows Presentation Foundation)
 - **UI Library**: Material Design In XAML Toolkit
 - **Dependency Injection**: Microsoft.Extensions.DependencyInjection
-- **Charts & Analytics**: LiveCharts.Wpf
+- **Charts & Analytics**: ScottPlot.WPF
 - **Data Storage**: SQLite (for local data persistence)
 - **HTTP Client**: RestSharp (for API integrations)
 - **Logging**: Microsoft.Extensions.Logging
@@ -458,10 +458,10 @@ All operations are fully asynchronous for maximum responsiveness:
 <PackageReference Include="MaterialDesignColors" Version="2.1.4" />
 <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
-<PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+<PackageReference Include="ScottPlot.WPF" Version="4.1.71" />
 <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
 <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
-<PackageReference Include="RestSharp" Version="110.2.0" />
+<PackageReference Include="RestSharp" Version="111.4.1" />
 ```
 
 ## 🐛 Troubleshooting
